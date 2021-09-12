@@ -158,7 +158,8 @@
 		onLoad() {
 			
 			if(!this.GetQueryString('trade_no')){
-				alert('trade_no不存在');
+				//alert('trade_no不存在');
+				this.trade_no = '';
 			}else{
 				this.trade_no = this.GetQueryString('trade_no');
 			}
