@@ -6,7 +6,9 @@
 					<view class="title">
 					    <image v-bind:src="'../../static/'+item.type+'.png'" mode=""></image>
 					    <view class="name">{{item.name}}<text>></text></view>
-					    <view v-if="item.status === 3" class="status">审核完成</view>
+						<view v-if="item.status === 1" class="status">待审核</view>
+						<view v-if="item.status === 2" class="status">审核失败</view>
+					    <view v-if="item.status === 3" class="status">审核通过</view>
 						<view v-if="item.status === 4" class="status">已完成</view>
 					</view> 
 					<view class="content">
@@ -14,8 +16,11 @@
 					    <view class="detail">
 					        <view class="name">评价编号：{{item.unumber}}</view>
 					        <view class="price"><view>需付款<text>{{item.fee}}</text>元</view>下单人：{{item.user_name}}</view>
-					        <view class="rule"><text>评鉴规则：</text>{{item.introduce}}</view>
-					        <view class="btn">审核通过</view>
+					        <view class="rule"><text>评鉴规则：</text><p class="vhtml" v-html="item.introduce"></p></view>
+					        <view v-if="item.status === 1" class="btn">待审核</view>
+							<view v-if="item.status === 2" class="btn">审核失败</view>
+							<view v-if="item.status === 3" class="btn">审核通过</view>
+							<view v-if="item.status === 4" class="btn">已完成</view>
 					    </view>
 					</view>
 				</view>
@@ -101,11 +106,11 @@
 			  
 			  
 			  
-			  <view v-if="user.type===2">
+			  <view v-if="user.user_type===2">
 				<view class="text_center fz_24 mt10 mb30">审核通过</view>
 			  </view> 
 			  
-			  <view v-if="user.type===3">
+			  <view v-if="user.user_type===3">
 				<view class="content_list flex_between1">
 				  <text class="content_list_title">审核结果</text>
 				  <view class="content_list_input" style="font-size: 28rpx;display: flex;padding-left: 30rpx;">
@@ -193,7 +198,7 @@
 					 
 					 
 				var url = '';
-				 if(this.user.type === 3){
+				 if(this.user.user_type === 3){
 					 url = '/api/v1/check/orders?trade_no='+this.trade_no
 				 }else{
 					 url = '/api/v1/merchant/orders?trade_no='+this.trade_no
@@ -410,13 +415,7 @@
 
 <style>
 	
-	>>> uni-image>active{position:absolute;left:0;top:0;width:100vw;height: auto;}
-	::v-deep uni-image>active{position:absolute;left:0;top:0;width:100vw;height: auto;}
-	/deep/ uni-image>active{position:absolute;left:0;top:0;width:100vw;height: auto;}
 	
-	>>> .active{position:absolute;left:0;top:0;width:100vw;height: auto;}
-	::v-deep .active{position:absolute;left:0;top:0;width:100vw;height: auto;}
-	/deep/ .active{position:absolute;left:0;top:0;width:100vw;height: auto;}
 	
 	
     .images{margin-top: 20rpx;}
